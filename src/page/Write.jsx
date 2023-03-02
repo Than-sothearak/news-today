@@ -36,7 +36,7 @@ export const Write = () => {
             <h1 className="text-3xl font-bold">Publish</h1>
             <span>
               <b>Status: </b>
-              Draft
+              Draft:::
             </span>
 
             <span>
