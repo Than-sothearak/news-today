@@ -7,7 +7,7 @@ export const Write = () => {
     { id: 1, value: "art", name: "Art" },
     { id: 2, value: "technology", name: "Technology" },
     { id: 3, value: "cinema", name: "Cinema" },
-    { id: 3, value: "design", name: "Design" },
+    { id: 4, value: "design", name: "Design" },
   ];
   const [value, setValue] = useState("");
   console.log(value);
