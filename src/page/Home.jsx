@@ -1,9 +1,23 @@
-import React from "react";
-import { posts } from "../../data";
+import React, { useEffect, useState } from "react";
 import { Post } from "../components/Post";
 import { HeroBanner } from "../components/HeroBanner";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 export const Home = () => {
+  const [posts, setPosts] = useState([]);
+  const cat = useLocation().search;
 
+  useEffect(() => {
+    const fatchData = async () => {
+      try {
+        const res = await axios.get(`/api/posts${cat}`);
+        setPosts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fatchData();
+  }, [cat]);
   return (
     <div className="container mx-auto p-4">
       <div>
@@ -14,7 +28,7 @@ export const Home = () => {
 "
       >
         {posts.map((post) => (
-          <Post key={post.id} post={post}  />
+          <Post key={post.id} post={post} />
         ))}
       </div>
     </div>

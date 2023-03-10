@@ -1,6 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+import { useContext } from "react";
+import { GoSignOut } from "react-icons/go"
 export const Navbar = () => {
+  const { currentUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const lo = () => {
+    logout();
+    navigate('/')
+  }
   return (
     <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -43,7 +52,6 @@ export const Navbar = () => {
                 to="/"
                 aria-current="page"
                 className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-
               >
                 Home
               </Link>
@@ -80,20 +88,44 @@ export const Navbar = () => {
                 Design
               </Link>
             </li>
+
             <li>
               <Link
-                to="/login"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"              >
-                Login
+                to="/profile"
+                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+              >
+                {currentUser?.username}
               </Link>
             </li>
-            <li className="float-left">
-              <Link
-                to="/write"
-                className="block pl-3 text-white bg-white rounded md:bg-blue-500 md:p-2 md:text-white md:p-0 dark:text-white"              >
-                Write
-              </Link>
-            </li>
+            {currentUser ? (
+              <div>
+                <li className="float-left">
+                  <button
+                    onClick={lo}
+                    className="block pl-3 text-lg text-white bg-white rounded md:bg-blue-500 md:p-2 md:text-white md:p-0 dark:text-white"
+                  >
+                    <GoSignOut />
+                  </button>
+                </li>
+                <li className="float-left ml-3">
+                  <Link
+                    to="/write"
+                    className="block pl-3 text-white bg-white rounded md:bg-blue-500 md:p-2 md:text-white md:p-0 dark:text-white"
+                  >
+                    Write
+                  </Link>
+                </li>
+              </div>
+            ) : (
+              <li className="float-left">
+                <Link
+                  to="/login"
+                  className="block pl-3 text-white bg-white rounded md:bg-blue-500 md:p-2 md:text-white md:p-0 dark:text-white"
+                >
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
