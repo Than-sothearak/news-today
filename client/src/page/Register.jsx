@@ -53,7 +53,7 @@ export const Register = () => {
               Sign Up
             </h1>
             <form
-              
+              onSubmit={handleSubmmit}
               className="text-start"
               action="#"
             >
@@ -110,7 +110,6 @@ export const Register = () => {
                {err &&  <p className="mt-5 w-full text-center text-red-600">{err}</p> }
               </div>
               <button
-              onClick={handleSubmmit}
                 type="submit"
                 className="mt-5 w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,7 +9,7 @@ export const Login = () => {
     password: "",
   });
   const [err, setErr] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
@@ -22,14 +21,14 @@ export const Login = () => {
 
   const handleSubmmit = async (e) => {
     e.preventDefault();
-    if (setInput === '') {
-      alert("plaese fill in")
+    if (setInput === "") {
+      alert("plaese fill in");
     } else {
       try {
-        await login(input)
+        await login(input);
         navigate("/");
       } catch (err) {
-        setErr(err.response.data)
+        setErr(err.response.data);
       }
     }
   };
@@ -42,7 +41,7 @@ export const Login = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
-            <form className="text-start " action="#">
+            <form onSubmit={handleSubmmit} className="text-start ">
               <div className="mt-5">
                 <label
                   htmlFor="username"
@@ -79,7 +78,6 @@ export const Login = () => {
               </div>
 
               <button
-              onClick={handleSubmmit}
                 type="submit"
                 className="mt-5 w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
