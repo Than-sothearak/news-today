@@ -76,14 +76,27 @@ export const updatePost = (req, res) => {
 
     const postId = req.params.id;
    
-    var q =
+    if(req.file) {
+      var q =
       "UPDATE posts SET `title`=?,`desc`=?,`img`=?,`cat`=? WHERE `id` = ? AND `uid` = ?";
 
     var values = [req.body.title, req.body.desc, req.body.img, req.body.cat];
-
     db.query(q, [...values, postId, userInfo.id], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.json("Post has been updated.");
     });
+    } else {
+      var q =
+      "UPDATE posts SET `title`=?,`desc`=?,`cat`=? WHERE `id` = ? AND `uid` = ?";
+
+    var values = [req.body.title, req.body.desc,req.body.cat];
+    db.query(q, [...values, postId, userInfo.id], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.json("Post has been updated.");
+    });
+    }
+    
+
+    
   });
 };

@@ -75,15 +75,40 @@ export const updatePost = (req, res) => {
     if (err) return res.status(403).json("Token is not valid!");
 
     const postId = req.params.id;
-   
-    var q =
-      "UPDATE posts SET `title`=?,`desc`=?,`img`=?,`cat`=? WHERE `id` = ? AND `uid` = ?";
 
-    var values = [req.body.title, req.body.desc, req.body.img, req.body.cat];
+    if (!req.file) {
+      const q =
+        "UPDATE posts SET `title`=?,`desc`=?,`cat`=? WHERE `id` = ? AND `uid` = ?";
 
-    db.query(q, [...values, postId, userInfo.id], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.json("Post has been updated.");
-    });
+      const values = [
+        req.body.title,
+        req.body.desc,
+        req.body.cat,
+      ];
+
+      db.query(q, [...values, postId, userInfo.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json("Post has been updated.");
+      });
+    } else {
+      const q =
+        "UPDATE posts SET `title`=?,`desc`=?,`img`=?,`cat`=? WHERE `id` = ? AND `uid` = ?";
+
+      const values = [
+        req.body.title,
+        req.body.desc,
+        req.body.img,
+        req.body.cat,
+      ];
+      db.query(q, [...values, postId, userInfo.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.json("Post has been updated.");
+      });
+    }
+
+    // db.query(q, [...values, postId, userInfo.id], (err, data) => {
+    //   if (err) return res.status(500).json(err);
+    //   return res.json("Post has been updated.");
+    // });
   });
 };

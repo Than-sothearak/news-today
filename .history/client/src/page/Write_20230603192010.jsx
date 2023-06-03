@@ -27,12 +27,10 @@ export const Write = () => {
   const upload = async () => {
     try {
       const formData = new FormData();
-    
-        formData.append("file", file);
+      formData.append("file", file);
       const res = await axios.post("/api/upload", formData);
       console.log(res.data);
       return res.data;
-  
     } catch (err) {
       console.log(err);
     }
@@ -100,7 +98,7 @@ export const Write = () => {
             <div>
               <h3>Upload Image</h3>
               <input
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => setFile(file?.e.target.files[0])}
                 type="file"
                 id="img"
                 name={file}

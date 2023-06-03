@@ -27,12 +27,12 @@ export const Write = () => {
   const upload = async () => {
     try {
       const formData = new FormData();
-    
-        formData.append("file", file);
-      const res = await axios.post("/api/upload", formData);
-      console.log(res.data);
-      return res.data;
-  
+      formData.append("file", file);
+      if (file) {
+        const res = await axios.post("/api/upload", formData);
+        console.log(res.data);
+        return res.data;
+      }
     } catch (err) {
       console.log(err);
     }
