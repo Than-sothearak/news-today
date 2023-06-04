@@ -94,10 +94,9 @@ export const Single = () => {
             </div>
             <div className="pl-4 text-start">
               <div className="flex gap-3">
-                <Link to={post.link} className="text-blue-500">
-                  <h3 className="font-bold">{post.username}</h3>
-                </Link>
-
+              
+                <h3 className="font-bold">{post.username}</h3>
+                <h1>{post.link}</h1>
                 {currentUser && <div>{checkUsername()}</div>}
               </div>
               <div className="flex gap-3 text-sm">

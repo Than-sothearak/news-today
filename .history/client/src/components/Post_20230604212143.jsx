@@ -71,11 +71,11 @@ export const Post = ({ post }) => {
           />
         </div>
         <div className="w-full h-auto text-start mt-2">
-          <h2 className="text-sm">
+          <h2 className="text-sm mb-2">
             {getYear} {getMonthString(getMonth)} {getDay} 
             
           </h2>
-          <h1 className="font-bold text-md text-ellipsis overflow-hidden">
+          <h1 className="font-bold text-sm text-ellipsis overflow-hidden">
             {post.title}
           </h1>
         </div>

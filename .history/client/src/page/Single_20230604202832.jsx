@@ -17,7 +17,7 @@ export const Single = () => {
 
   const date = new Date();
   const getDateToString = date.toString();
-  const getDate = getDateToString.slice(0, 21);
+  const getDate = getDateToString.slice(0, 25);
 
   const { currentUser, logout } = useContext(AuthContext);
 
@@ -65,17 +65,6 @@ export const Single = () => {
       <div>
         <div className="text-start">
           <h1 className="font-bold text-3xl py-5">{post.title}</h1>
-          <div
-            className="h-full flex justify-center
-         w-full"
-          >
-            <img
-              className="object-center object-cover w-full h-full"
-              src={`../upload/${post?.img}`}
-              alt={post.img}
-            />
-          </div>
-
           <div className="mb-10 flex flex-wrap pt-5">
             <div>
               {post.userImg ? (
@@ -92,12 +81,9 @@ export const Single = () => {
                 />
               )}
             </div>
-            <div className="pl-4 text-start">
+            <div className="px-4 text-start">
               <div className="flex gap-3">
-                <Link to={post.link} className="text-blue-500">
-                  <h3 className="font-bold">{post.username}</h3>
-                </Link>
-
+                <h3 className="font-bold">{post.username}</h3>
                 {currentUser && <div>{checkUsername()}</div>}
               </div>
               <div className="flex gap-3 text-sm">
@@ -110,6 +96,15 @@ export const Single = () => {
             dangerouslySetInnerHTML={{ __html: post.desc }}
             className="description"
           ></ul>
+        </div>
+        <div
+          className="h-full flex justify-center
+         w-full"
+        >
+          <img
+            className="object-center object-cover w-full h-full"
+            src={`../upload/${post?.img}`}
+          />
         </div>
       </div>
       <Menu cat={post.cat} />

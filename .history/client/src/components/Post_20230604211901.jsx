@@ -71,13 +71,16 @@ export const Post = ({ post }) => {
           />
         </div>
         <div className="w-full h-auto text-start mt-2">
-          <h2 className="text-sm">
+          <h2 className="text-sm mb-3 float-right">
             {getYear} {getMonthString(getMonth)} {getDay} 
             
           </h2>
-          <h1 className="font-bold text-md text-ellipsis overflow-hidden">
+          <h1 className="font-bold text-xs text-ellipsis whitespace-nowrap overflow-hidden">
             {post.title}
           </h1>
+          <p className="mt-1 text-xs text-ellipsis whitespace-nowrap overflow-hidden">
+            {getText(post.desc)}
+          </p>
         </div>
       </Link>
     </div>

@@ -17,7 +17,7 @@ export const Single = () => {
 
   const date = new Date();
   const getDateToString = date.toString();
-  const getDate = getDateToString.slice(0, 21);
+  const getDate = getDateToString.slice(0, 25);
 
   const { currentUser, logout } = useContext(AuthContext);
 
@@ -62,54 +62,47 @@ export const Single = () => {
 
   return (
     <div className="mt-4 px-4 2xl:px-80 xl:px-46 lg:px-40 md:px-20 sm:px-4 container mx-auto flex flex-col justify-center list-disc">
-      <div>
-        <div className="text-start">
-          <h1 className="font-bold text-3xl py-5">{post.title}</h1>
-          <div
-            className="h-full flex justify-center
+      <div className="">
+        <div
+          className="h-full flex justify-center
          w-full"
-          >
-            <img
-              className="object-center object-cover w-full h-full"
-              src={`../upload/${post?.img}`}
-              alt={post.img}
-            />
+        >
+          <img
+            className="object-center object-cover w-full h-full"
+            src={`../upload/${post?.img}`}
+          />
+        </div>
+        <div className="flex flex-wrap pt-5">
+          <div>
+            {post.userImg ? (
+              <img
+                className="w-10 h-10 rounded-full"
+                src={post.userImg}
+                alt="Rounded avatar"
+              />
+            ) : (
+              <img
+                className="w-10 h-10 rounded-full"
+                src="https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
+                alt="Rounded avatar"
+              />
+            )}
+          </div>
+          <div className="px-4 text-start">
+            <h3 className="font-bold">{post.username}</h3>
+            <div className="flex"></div>
+            <h6>Posted {moment(post.date).fromNow()}</h6>
+            <p className="text-sm">{getDate}</p>
           </div>
 
-          <div className="mb-10 flex flex-wrap pt-5">
-            <div>
-              {post.userImg ? (
-                <img
-                  className="w-10 h-10 rounded-full"
-                  src={post.userImg}
-                  alt="Rounded avatar"
-                />
-              ) : (
-                <img
-                  className="w-10 h-10 rounded-full"
-                  src="https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
-                  alt="Rounded avatar"
-                />
-              )}
-            </div>
-            <div className="pl-4 text-start">
-              <div className="flex gap-3">
-                <Link to={post.link} className="text-blue-500">
-                  <h3 className="font-bold">{post.username}</h3>
-                </Link>
-
-                {currentUser && <div>{checkUsername()}</div>}
-              </div>
-              <div className="flex gap-3 text-sm">
-                <h6>Posted {moment(post.date).fromNow()}</h6>
-                <p>{getDate}</p>
-              </div>
-            </div>
+          {currentUser && <div>{checkUsername()}</div>}
+          <div className="text-start">
+            <h1 className="font-bold text-3xl py-5">{post.title}</h1>
+            <ul
+              dangerouslySetInnerHTML={{ __html: post.desc }}
+              className="description"
+            ></ul>
           </div>
-          <ul
-            dangerouslySetInnerHTML={{ __html: post.desc }}
-            className="description"
-          ></ul>
         </div>
       </div>
       <Menu cat={post.cat} />
