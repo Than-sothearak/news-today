@@ -6,6 +6,7 @@ import { Register } from "./page/Register";
 import { Single } from "./page/Single";
 import { Write } from "./page/Write";
 import Layout from "./components/Layout";
+import  Profile  from "./page/Profile";
 
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/write",
         element:<Write />
+      },
+      {
+        path: "/profile",
+        element:<Profile />
       },
     ]
   },
