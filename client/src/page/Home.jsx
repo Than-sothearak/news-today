@@ -22,7 +22,7 @@ export const Home = () => {
 
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto px-4 2xl:px-72 xl:px-46 lg:px-40 md:px-20 sm:px-4">
       {/* <div>
         <HeroBanner />
       </div> */}

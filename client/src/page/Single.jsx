@@ -57,7 +57,7 @@ export const Single = () => {
   };
 
   return (
-    <div className="px-10 container mx-auto flex flex-col justify-center list-disc">
+    <div className="mt-4 px-4 2xl:px-80 xl:px-46 lg:px-40 md:px-20 sm:px-4 container mx-auto flex flex-col justify-center list-disc">
       <div className="">
         <div
           className="h-full flex justify-center
