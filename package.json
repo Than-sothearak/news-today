@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Than-sothearak/news-today/issues"
   },
-  "homepage": "https://github.com/Than-sothearak/news-today#readme"
+  "homepage": "https://github.com/Than-sothearak/news-today#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
 }
