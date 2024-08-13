@@ -1,4 +1,5 @@
 import express from "express";
+
 import path from "path";
 import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";

@@ -4,7 +4,7 @@ import { AiFillTwitterCircle, AiFillLinkedin, AiFillGithub } from 'react-icons/a
 
 export const Footer = () => {
   return (
-    <div className="w-full h-46  bg-blue-600 text-white mt-10 py-10">
+    <div className="w-full h-46  bg-red-700 text-white mt-10 py-10">
       <div className="flex flex-wrap justify-between container mx-auto p-5  ">
         <div className="xs:pb-10">
           <h1>Sothearak</h1>
@@ -24,7 +24,7 @@ export const Footer = () => {
       </div>
       <hr></hr>
       <div className="container mx-auto flex justify-center mt-5">
-        <p className="text-sm">© 2023 Than Sothearak</p>
+        <p className="text-sm">© 2023 News Today</p>
       </div>
     </div>
   );

@@ -29,7 +29,6 @@ export const Write = () => {
       const formData = new FormData();
       formData.append("file", file);
       const res = await axios.post("/api/upload", formData);
-      console.log(res.data)
       return res.data;
       
     } catch (err) {
@@ -63,7 +62,7 @@ export const Write = () => {
   };
 
   return (
-    <div className="mt-10 px-5 container mx-auto flex flex-wrap justify-around ">
+    <div className="mt-10 container mx-auto h-screen flex flex-wrap justify-around ">
       <div className=" sm:w-3/5 md:w-2/4 lg:w-3/5 flex flex-col justify-start ">
         <input
           onChange={(e) => setTitle(e.target.value)}

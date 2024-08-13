@@ -22,7 +22,7 @@ export default function EditProfile() {
   }, [currentUser?.id]);
 
   return (
-    <div className="px-4 2xl:px-80 xl:px-46 lg:px-40 md:px-20 sm:px-4 container mx-auto">
+    <div className="container mx-auto h-screen px-4 2xl:px-72 xl:px-46 lg:px-40 md:px-20 sm:px-4 mt-10">
       {" "}
       <div className="flex gap-x-4">
         <img

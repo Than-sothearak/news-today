@@ -45,12 +45,12 @@ export default function EditProfile() {
   };
 
   return (
-    <div className="px-4 2xl:px-80 xl:px-46 lg:px-40 md:px-20 sm:px-4 container mx-auto">
+    <div className="mt-10 container mx-auto h-screen px-4 2xl:px-72 xl:px-46 lg:px-40 md:px-20 sm:px-4">
       {" "}
       <ul role="list" className="divide-y divide-gray-100">
         <li
           key={state.email}
-          className="flex justify-between gap-x-6 py-5"
+          className="flex justify-between gap-x-6"
         >
           <div className="flex gap-x-4">
             <img

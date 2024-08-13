@@ -2,30 +2,31 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { useContext } from "react";
-import { GoSignOut } from "react-icons/go";
-
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-
 import axios from "axios";
 
 const navigation = [
   { name: "Home", href: "/", current: false },
   { name: "Portfolio", href: "#", current: false },
   { name: "About", href: "#", current: false },
-  { name: "Contact", href: "#", current: false },
+  {
+    name: "Category",
+    href: "#",
+    current: false,
+    subCategory: [
+      { name: "Technology", href: "technology" },
+      { name: "Art", href: "art" },
+      { name: "Music", href: "music" },
+      { name: "Gaming", href: "videogame" },
+    ],
+  },
 ];
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 export const Navbar = () => {
   const { currentUser, logout } = useContext(AuthContext);
-  const [user, setUser] = useState({});
+  const [clickProfile, setClickProfile] = useState(false);
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,359 +39,84 @@ export const Navbar = () => {
     fetchData();
   }, [currentUser?.id]);
 
-  const lo = () => {
+  const userLogout = () => {
     logout();
     navigate("/");
-    
   };
 
-  
-
-
   return (
-    <Disclosure as="nav" className="bg-blue-600">
-      {({ open }) => (
-        <>
-          <div className="mx-auto max-w-7xl px-4 2xl:px-46 xl:px-40 lg:px-40 md:px-20 sm:px-4">
-            <div className="relative flex h-16 items-center justify-between">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
+    <nav className="container max-w-full flex justify-between items-center mt-auto bg-white text-black shadow-sm">
+      <div className="h-full flex justify-center items-center">
+        <h3 className="font-bold text-2xl ml-6 text-red-600">News Today</h3>
+      </div>
+
+      <div className=" flex items-center gap-4 cursor-pointer ">
+        {navigation.map((nav) => (
+          <div
+            key={nav.name}
+            className="relative p-6 hover:bg-red-600 hover:text-white group"
+          >
+            <a href={nav.href} className="w-full h-full hover:underline">
+              {nav.name}
+            </a>
+
+            {nav.subCategory && (
+              <div className="hidden shadow-lg absolute w-48 left-0 top-[68px] bg-white flex-col justify-center items-center group-hover:flex group-hover:text-black">
+                {nav.subCategory.map((subCat) => (
+                  <a
+                    key={subCat.name}
+                    href={`/?cat=${subCat.href}`}
+                    className="hover:underline text-center cursor-pointer w-full border-b p-4"
+                  >
+                    {subCat.name}
+                  </a>
+                ))}
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                    <Menu as="div" className="relative inline-block text-left">
-                      <div>
-                        <Menu.Button className="inline-flex w-full justify-center rounded-md bg-blue-600 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                          Blog
-                          <ChevronDownIcon
-                            className="-mr-1 h-5 w-5"
-                            aria-hidden="true"
-                          />
-                        </Menu.Button>
-                      </div>
+            )}
+          </div>
+        ))}
+      </div>
 
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white">
-                          <div className="py-1">
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="/?cat=art"
-                                  className={classNames(
-                                    active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-sm"
-                                  )}
-                                >
-                                  Art
-                                </a>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="/?cat=technology"
-                                  className={classNames(
-                                    active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-sm"
-                                  )}
-                                >
-                                  Technology
-                                </a>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="/?cat=design"
-                                  className={classNames(
-                                    active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-sm"
-                                  )}
-                                >
-                                  Design
-                                </a>
-                              )}
-                            </Menu.Item>
-
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="/?cat=food"
-                                  className={classNames(
-                                    active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-sm"
-                                  )}
-                                >
-                                  Food
-                                </a>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="/?cat=videogame"
-                                  className={classNames(
-                                    active
-                                      ? "bg-gray-100 text-gray-900"
-                                      : "text-gray-700",
-                                    "block px-4 py-2 text-sm"
-                                  )}
-                                >
-                                  Video Game
-                                </a>
-                              )}
-                            </Menu.Item>
-                          </div>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  </div>
-                </div>
-              </div>
-
-              {currentUser ? (
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {/* Profile dropdown */}
-
-                  <Menu as="div" className="relative ml-3 ">
-                    <div>
-                      <Menu.Button className="inline-flex w-full justify-center rounded-md bg-blue-600 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                        <span className="sr-only">Open user menu</span>
-                        <img
-                          className="inline-block h-12 w-12 rounded-full"
-                          src={`../upload/${user?.img}`}
-                          alt="Rounded avatar"
-                        />
-                      </Menu.Button>
-                    </div>
-
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              to="/profile"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Your Profile
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/write"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Write
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              onClick={lo}
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Sign out
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
-                </div>
-              ) : (
-                <button className="rounded-full bg-blue-500">
-                  <Link to="/login" className="text-white bg-blue rounded-full">
-                    Login
-                  </Link>
-                </button>
-              )}
+      <div className="mr-6">
+        {currentUser ? (
+          <div className="relative group">
+            <button
+              className="p-6 w-full"
+              onClick={() => setClickProfile((prev) => !prev)}
+            >
+              {currentUser.username}
+            </button>
+            <div
+              className={`shadow-lg absolute w-36 right-4 bg-white  flex-col justify-center items-center ${
+                !clickProfile ? "hidden" : "flex"
+              }`}
+            >
+              <a
+                href="/profile"
+                className="text-center cursor-pointer w-full border-b p-4"
+              >
+                Your profile
+              </a>
+              <a
+                href="/write"
+                className="text-center cursor-pointer w-full border-b p-4"
+              >
+                Write
+              </a>
+              <button
+                onClick={userLogout}
+                className="cursor-pointer w-full border-b p-4"
+              >
+                Logout
+              </button>
             </div>
           </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <Menu.Button className="inline-flex w-full justify-center rounded-md bg-blue-600 bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                    Blog
-                    <ChevronDownIcon
-                      className="-mr-1 h-5 w-5"
-                      aria-hidden="true"
-                    />
-                  </Menu.Button>
-                </div>
-
-                <Transition
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white">
-                    <div className="py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/?cat=art"
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            Art
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/?cat=technology"
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            Technology
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/?cat=design"
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            Design
-                          </a>
-                        )}
-                      </Menu.Item>
-
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/?cat=food"
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            Food
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/?cat=videogame"
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            Video Game
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
+        ) : (
+          <button>
+            <a href="login">Login</a>
+          </button>
+        )}
+      </div>
+    </nav>
   );
 };
