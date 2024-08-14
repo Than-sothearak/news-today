@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Post } from "../components/Post";
-import { HeroBanner } from "../components/HeroBanner";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 export const Home = () => {
@@ -21,9 +20,6 @@ export const Home = () => {
 
   return (
     <div className="mt-10 container mx-auto h-screen px-4 2xl:px-72 xl:px-46 lg:px-40 md:px-20 sm:px-4">
-      <div>
-        <HeroBanner />
-      </div>
       <div
         className="grid grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-83 
 "
