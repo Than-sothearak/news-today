@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { useContext } from "react";
 import axios from "axios";
 import { IoClose, IoMenu } from "react-icons/io5";
-import { MdClose, MdKeyboardArrowRight, MdLogout, MdModeEdit } from "react-icons/md";
+import UserProfile from "./UserProfile";
+import {  MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
+
 
 const navigation = [
   { name: "Home", href: "/", current: false },
@@ -25,11 +27,10 @@ const navigation = [
 
 export const Navbar = () => {
   const { currentUser, logout } = useContext(AuthContext);
-  const [clickProfile, setClickProfile] = useState(false);
   const [clickedMenu, setClickedMenu] = useState(false);
   const [user, setUser] = useState(null); // Adding user state
 
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,10 +44,7 @@ export const Navbar = () => {
     if (currentUser) fetchData();
   }, [currentUser]);
 
-  const userLogout = () => {
-    logout();
-    navigate("/");
-  };
+
 
   return (
     <div className="relative z-50">
@@ -71,8 +69,9 @@ export const Navbar = () => {
               key={nav.name}
               className="relative p-6 hover:bg-red-600 hover:text-white group"
             >
-              <Link to={nav.href} className="w-full h-full hover:underline">
+              <Link to={nav.href} className="flex items-center gap-2 w-full h-full hover:underline">
                 {nav.name}
+                {nav.subCategory && <MdKeyboardArrowDown />}
               </Link>
 
               {nav.subCategory && (
@@ -81,7 +80,7 @@ export const Navbar = () => {
                     <Link
                       key={subCat.name}
                       to={`/?cat=${subCat.href}`}
-                      className="hover:underline text-center cursor-pointer w-full border-b p-4"
+                      className="hover:underline text-center cursor-pointer w-full border-b p-4 hover:bg-red-600 hover:text-white"
                     >
                       {subCat.name}
                     </Link>
@@ -92,68 +91,7 @@ export const Navbar = () => {
           ))}
         </div>
 
-        <div className="mr-6 z-50 border rounded-full md:mt-0 mt-3 bg-blue-800">
-          {currentUser ? (
-            <div className="relative group">
-              <button
-                className=""
-                onClick={() => setClickProfile((prev) => !prev)}
-              >
-                <img
-                  class="inline-block h-12 w-12 rounded-full ring-8 ring-white"
-                  src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
-              </button>
-              <div
-                className={`shadow-lg absolute right-0 w-[320px] bg-white mt-6 border rounded-xl  flex-col justify-center items-center ${
-                  !clickProfile ? "hidden" : "flex"
-                }`}
-              >
-                <div className="flex flex-col justify-center items-center gap-4 mt-4">
-                  <h2 className="font-bold">{currentUser.email}</h2>
-                  <div className="relative">
-                    <img
-                      class="inline-block h-24 w-24 rounded-full  ring-white"
-                      src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                    <Link  to="/profile" className="absolute right-0 bottom-0 bg-gray-800 rounded-full text-white p-1 hover:bg-slate-600">
-                      {" "}
-                      <MdModeEdit />
-                    </Link>
-                  </div>
-                  <h1 className="text-xl">Welcome, {currentUser.username}!</h1>
-                </div>
-                <div className="flex justify-center items-center p-2 absolute top-2 right-2 rounded-full hover:bg-slate-100 hover:text-300">
-                  <button onClick={() => setClickProfile((prev) => !prev)}>
-                    <MdClose size={24} />
-                  </button>
-                </div>
-                <div className="flex flex-col m-2">
-                  <Link
-                    to="/write"
-                    className="text-center cursor-pointer w-full p-4"
-                  >
-                    Write
-                  </Link>
-                  <button
-                  onClick={userLogout}
-                  className="cursor-pointer w-full p-4 flex justify-center items-center gap-2"
-                > 
-                <MdLogout />
-                  Logout
-                </button>
-                </div>
-               
-              </div>
-            </div>
-          ) : (
-            <button className="px-4 py-2 text-white">
-              <Link to="/login">Login</Link>
-            </button>
-          )}
-        </div>
+      <UserProfile currentUser={currentUser} logout={logout}/>
       </nav>
 
       {/* Mobile Menu */}
@@ -177,7 +115,7 @@ export const Navbar = () => {
                   {nav.subCategory && (
                     <div className="flex flex-col justify-center items-start gap-4 ">
                       {nav.subCategory.map((subLink) => (
-                        <Link to={subLink.href} className="hover:line-through">
+                        <Link to={`cat?/${subLink.href}`} >
                           {subLink.name}
                         </Link>
                       ))}
@@ -185,14 +123,7 @@ export const Navbar = () => {
                   )}
                 </div>
               ))}
-              {currentUser && (
-                <button
-                  onClick={userLogout}
-                  className="p-6 text-black hover:bg-red-600 hover:text-white"
-                >
-                  Logout
-                </button>
-              )}
+           
             </div>
           </div>
         </div>
